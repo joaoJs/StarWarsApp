@@ -96,38 +96,38 @@ extension NetworkManager {
         
     }
     
-//    func fetchForm(name: String, completion: @escaping FormHandler) {
-//
-//        guard let url = URL(string: baseFormUrl + name) else {
-//            completion(.failure(.badURL))
-//            return
-//        }
-//
-//        self.session.dataTask(with: url) { (data, response, error) in
-//
-//            if let error = error {
-//                print("first info eror")
-//                completion(.failure(.serverError(error.localizedDescription)))
-//                return
-//            }
-//
-//            guard let data = data else {
-//                print("data info eror")
-//                completion(.failure(.badData))
-//                return
-//            }
-//
-//            do {
-//                let info = try self.decoder.decode(PokeForm.self, from: data)
-//                completion(.success(info.sprites))
-//            } catch {
-//                print(error.localizedDescription)
-//                completion(.failure(.decodeError))
-//            }
-//
-//        }.resume()
-//
-//    }
+    func fetchMovies(url: String, completion: @escaping FilmsHandler) {
+
+        guard let url = URL(string: url) else {
+            completion(.failure(.badURL))
+            return
+        }
+
+        self.session.dataTask(with: url) { (data, response, error) in
+
+            if let error = error {
+                print("first info eror")
+                completion(.failure(.serverError(error.localizedDescription)))
+                return
+            }
+
+            guard let data = data else {
+                print("data info eror")
+                completion(.failure(.badData))
+                return
+            }
+
+            do {
+                let info = try self.decoder.decode(Film.self, from: data)
+                completion(.success(info))
+            } catch {
+                print(error.localizedDescription)
+                completion(.failure(.decodeError))
+            }
+
+        }.resume()
+
+    }
     
 //    func fetchSprite(name: String, spriteUrl: String, completion: @escaping SpriteHandler) {
 //

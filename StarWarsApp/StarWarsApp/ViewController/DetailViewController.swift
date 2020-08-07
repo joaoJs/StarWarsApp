@@ -3,14 +3,32 @@ import UIKit
 class DetailViewController: UIViewController {
 
     var name: UILabel?
-    //var stackView: UIStackView?
+    var eyeColor: UILabel?
+    var hairColor: UILabel?
+    var homeWorld: UILabel?
+    var stackView: UIStackView?
     
-    //var tuple: (/*imageView: UIImage?, name:*/ String)?
     var nameFromCell: String?
+    var eyeColorFromCell: String?
+    var hairColorFromCell: String?
+    var homeWorldFromCell: String?
+    var moviesFromCell: [String]?
     
-    init(/*details: ( imageView: UIImage?,  name: String)*/ nameFromCell: String) {
+    
+    var tuple: (name: String, eyeColor: String?, hairColor: String?, homeWorld: String?, films: [String]?)?
+    
+    init(details: (name: String, eyeColor: String?, hairColor: String?, homeWorld: String?, films: [String]?)) {
+        self.tuple = details
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    init(nameFromCell: String, eyeColorFromCell: String, hairColorFromCell: String, homeWorldFromCell: String, moviesFromCell: [String]) {
         //self.tuple = details
         self.nameFromCell = nameFromCell
+        self.eyeColorFromCell? = eyeColorFromCell
+        self.hairColorFromCell? = hairColorFromCell
+        self.homeWorldFromCell? = homeWorldFromCell
+        //self.moviesFromCell? = moviesFromCell
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -20,11 +38,14 @@ class DetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setUp()
-        self.name?.text = self.nameFromCell
+        self.setUp(movies: self.tuple?.films ?? ["movie1", "movie2"])
+        self.name?.text = self.tuple?.name
+        self.eyeColor?.text = self.tuple?.eyeColor
+        self.hairColor?.text = self.tuple?.hairColor
+        self.homeWorld?.text = self.tuple?.homeWorld
     }
     
-    private func setUp() {
+    private func setUp(movies: [String]) {
         self.view.backgroundColor = UIColor(red: CGFloat(250.0/255.0), green: CGFloat(250.0/255.0), blue: CGFloat(250.0/255.0), alpha: 1.0)
         
         let scrollView = UIScrollView(frame: .zero)
@@ -38,9 +59,6 @@ class DetailViewController: UIViewController {
         stackView.spacing = 8.0
         stackView.backgroundColor = UIColor(red: CGFloat(250.0/255.0), green: CGFloat(250.0/255.0), blue: CGFloat(250.0/255.0), alpha: 1.0)
         
-//        let imageView = UIImageView(frame: .zero)
-//        imageView.translatesAutoresizingMaskIntoConstraints = false
-//        imageView.image = UIImage(named: "Graph")
         
         let name = UILabel(frame: .zero)
         name.translatesAutoresizingMaskIntoConstraints = false
@@ -49,42 +67,45 @@ class DetailViewController: UIViewController {
         name.font = UIFont(name: "AvenirNextCondensed-Regular", size: 32.0)
         name.textAlignment = .center
         
-//        let typeOne = UILabel(frame: .zero)
-//        typeOne.translatesAutoresizingMaskIntoConstraints = false
-//        typeOne.textColor = Helpers.getTypeColor(type: to)
-//        typeOne.font = UIFont(name: "AvenirNextCondensed-Medium", size: 18.0)
-//        typeOne.textAlignment = .center
-//
-//        let typeTwo = UILabel(frame: .zero)
-//        typeTwo.translatesAutoresizingMaskIntoConstraints = false
-//        typeTwo.textColor = Helpers.getTypeColor(type: tt)
-//        typeTwo.font = UIFont(name: "AvenirNextCondensed-Medium", size: 18.0)
-//        typeTwo.textAlignment = .center
+        let eyeColor = UILabel(frame: .zero)
+        eyeColor.translatesAutoresizingMaskIntoConstraints = false
+        eyeColor.text = "test"
+        eyeColor.textColor = UIColor(red: CGFloat(0.0/255.0), green: CGFloat(0.0/255.0), blue: CGFloat(50.0/255.0), alpha: 0.8)
+        eyeColor.font = UIFont(name: "AvenirNextCondensed-Regular", size: 18.0)
+        eyeColor.textAlignment = .center
+        
+        let hairColor = UILabel(frame: .zero)
+        hairColor.translatesAutoresizingMaskIntoConstraints = false
+        hairColor.text = "test"
+        hairColor.textColor = UIColor(red: CGFloat(0.0/255.0), green: CGFloat(0.0/255.0), blue: CGFloat(50.0/255.0), alpha: 0.8)
+        hairColor.font = UIFont(name: "AvenirNextCondensed-Regular", size: 18.0)
+        hairColor.textAlignment = .center
+        
+        let homeWorld = UILabel(frame: .zero)
+        homeWorld.translatesAutoresizingMaskIntoConstraints = false
+        homeWorld.text = "test"
+        homeWorld.textColor = UIColor(red: CGFloat(0.0/255.0), green: CGFloat(0.0/255.0), blue: CGFloat(50.0/255.0), alpha: 0.8)
+        homeWorld.font = UIFont(name: "AvenirNextCondensed-Regular", size: 18.0)
+        homeWorld.textAlignment = .center
+        
         
         //self.view.addSubview(imageView)
         self.view.addSubview(scrollView)
         scrollView.addSubview(stackView)
         stackView.addArrangedSubview(name)
-//        stackView.addArrangedSubview(typeOne)
-//        stackView.addArrangedSubview(typeTwo)
-        //self.view.addSubview(name)
+        stackView.addArrangedSubview(eyeColor)
+        stackView.addArrangedSubview(hairColor)
+        stackView.addArrangedSubview(homeWorld)
         
         
-//        films.forEach{ film in
-//            let currMove = UILabel(frame: .zero)
-//            currMove.translatesAutoresizingMaskIntoConstraints = false
-//            currMove.text = film
-//            currMove.textAlignment = .center
-//            stackView.addArrangedSubview(currMove)
-//        }
-        
-//        imageView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 8).isActive = true
-//        imageView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 8).isActive = true
-//        imageView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -8).isActive = true
-//        imageView.heightAnchor.constraint(equalToConstant: 256).isActive = true
-//        imageView.widthAnchor.constraint(equalToConstant: 256).isActive = true
-//        imageView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-//
+        movies.forEach{ movie in
+            let movieLabel = UILabel(frame: .zero)
+            movieLabel.translatesAutoresizingMaskIntoConstraints = false
+            movieLabel.text = movie
+            movieLabel.textAlignment = .center
+            stackView.addArrangedSubview(movieLabel)
+        }
+    
         scrollView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 8).isActive = true
         scrollView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 8).isActive = true
         scrollView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -8).isActive = true
@@ -96,17 +117,12 @@ class DetailViewController: UIViewController {
         stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor,constant: -8).isActive = true
         stackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         
-//        name.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 8).isActive = true
-//        name.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 8).isActive = true
-//        name.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -8).isActive = true
-//        name.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor,constant: -8).isActive = true
-        //stackView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
-        
-        
-        //self.imageView = imageView
+
+        self.stackView = stackView
         self.name = name
-//        self.typeOne = typeOne
-//        self.typeTwo = typeTwo
-        //self.stackView = stackView
+        self.eyeColor = eyeColor
+        self.hairColor = hairColor
+        self.homeWorld = homeWorld
+
     }
 }
