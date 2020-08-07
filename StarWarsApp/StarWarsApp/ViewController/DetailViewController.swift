@@ -102,6 +102,7 @@ class DetailViewController: UIViewController {
             let movieLabel = UILabel(frame: .zero)
             movieLabel.translatesAutoresizingMaskIntoConstraints = false
             movieLabel.text = movie
+            movieLabel.textColor = .black
             movieLabel.textAlignment = .center
             stackView.addArrangedSubview(movieLabel)
         }

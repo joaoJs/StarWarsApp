@@ -77,8 +77,8 @@ extension MainViewController: UITableViewDataSource {
         let hwURL = self.people[indexPath.row].homeworld
         let moviesUrl = self.people[indexPath.row].films
         
-        NetworkManager.shared.FetchHomeWorld(url: hwURL) { [weak self] result in
-            guard let self = self else { return }
+        NetworkManager.shared.FetchHomeWorld(url: hwURL) {  result in
+            //guard let self = self else { return }
             switch result {
             case .success(let hw):
                 DispatchQueue.main.async {
@@ -90,20 +90,22 @@ extension MainViewController: UITableViewDataSource {
                     cell.eyeColor?.text = eyeColor
                     cell.hairColor?.text = hairColor
                     cell.homeWorld?.text = hw.name
+                    var movies: [String] = []
                     moviesUrl.forEach{ movieUrl in
-                        NetworkManager.shared.fetchMovies(url: movieUrl) { [weak self] result in
-                            guard let self = self else { return }
+                        NetworkManager.shared.fetchMovies(url: movieUrl) {  result in
+                            //guard let self = self else { return }
                             switch result {
                             case .success(let film):
-                                DispatchQueue.main.async {
-                                    self.filmsDict[name]?.append(film.title)
-                                }
+                                
+                                movies.append(film.title)
+                                
                             case .failure(let error):
                                 print("error fetchMovie")
                                 print(error)
                             }
                         }
                     }
+                    self.filmsDict[name] = movies
                 }
                 
             case .failure(let error):
@@ -132,7 +134,7 @@ extension MainViewController: UITableViewDelegate {
             let hairColor = self.people[indexPath.row].hair_color
             let eyeColor = self.people[indexPath.row].eye_color
             guard let hw = self.hwDict[name] else { return }
-            let movies = self.filmsDict[name] ?? ["movie1"]
+            guard let movies = self.filmsDict[name] else { return }
             let vc = DetailViewController(details: (name: name, eyeColor: eyeColor, hairColor: hairColor, homeWorld: hw, films: movies))
             self.navigationController?.pushViewController(vc, animated: false)
         }
