@@ -119,7 +119,11 @@ extension MainViewController: UITableViewDataSource {
                     switch result {
                     case .success(let film):
                         DispatchQueue.main.async {
-                            self.filmsDict[name]?.append(film.title)
+                            if (self.filmsDict[name] == nil) {
+                                self.filmsDict[name] = []
+                            } else {
+                                self.filmsDict[name]?.append(film.title)
+                            }
                         }
                     case .failure(let error):
                         print("error fetchMovie")
